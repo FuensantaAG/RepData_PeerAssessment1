@@ -3,14 +3,14 @@
 
 ## Loading and preprocessing the data
 
-1. Load the data
+1) Load the data
 
 
 ```r
 data<-read.csv("activity.csv")
 ```
 
-2. Process/transform the data (if necessary) into a format suitable for your analysis
+2) Process/transform the data (if necessary) into a format suitable for your analysis
 
 
 
@@ -23,7 +23,7 @@ AverageStepsPerInterval<-aggregate(steps~interval,data=data,mean,na.rm=TRUE)
 
 For this part of the assignment, you can ignore the missing values in the dataset.
 
-1. Make a histogram of the total number of steps taken each day
+1) Make a histogram of the total number of steps taken each day
 
 
 ```r
@@ -32,7 +32,7 @@ hist(TotalStepsPerDay$steps, main="Histogram", xlab="Total steps per day")
 
 ![](./PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
 
-2. Calculate and report the mean and median total number of steps taken per day
+2) Calculate and report the mean and median total number of steps taken per day
 
 
 ```r
@@ -53,7 +53,7 @@ median(TotalStepsPerDay$steps)
 
 ## What is the average daily activity pattern?
 
-1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+1) Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 
 ```r
