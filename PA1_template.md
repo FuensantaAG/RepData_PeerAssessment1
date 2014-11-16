@@ -62,7 +62,7 @@ plot(AverageStepsPerInterval$interval,AverageStepsPerInterval$steps,type="l",xla
 
 ![](./PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
-2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+2) Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 
 
@@ -76,7 +76,7 @@ The 5-minute interval, on average across all the days in the dataset, which cont
 
 Note that there are a number of days/intervals where there are missing values (coded as NA). The presence of missing days may introduce bias into some calculations or summaries of the data.
 
-1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
+1) Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 
 
 ```r
@@ -85,7 +85,7 @@ non_complete<-nrow(data)-sum(complete.cases(data))
 
 The number of non-complete cases (with NAs) is 2304.
 
-2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+2) Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
 The strategy adopted is filling all the NAs with the average number of steps in the file.
 
@@ -106,7 +106,7 @@ data2 <- sapply(data, function(x){
 )
 ```
 
-3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+3) Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 
 ```r
@@ -114,7 +114,7 @@ data2<-data.frame(data2)
 data2$date<-data$date
 ```
 
-4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+4) Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
 
 ```r
@@ -122,7 +122,7 @@ TotalStepsPerDay2<-aggregate(steps~date,data=data2,sum,na.rm=TRUE)
 AverageStepsPerInterval2<-aggregate(steps~interval,data=data2,mean,na.rm=TRUE)
 ```
 
-4.1. Make a histogram of the total number of steps taken each day
+4.1) Make a histogram of the total number of steps taken each day
 
 
 ```r
@@ -131,7 +131,7 @@ hist(TotalStepsPerDay2$steps, main="Histogram", xlab="Total steps per day")
 
 ![](./PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
 
-4.2. Calculate and report the mean and median total number of steps taken per day
+4.2) Calculate and report the mean and median total number of steps taken per day
 
 
 ```r
@@ -154,6 +154,24 @@ median(TotalStepsPerDay2$steps)
 
 For this part the weekdays() function may be of some help here. Use the dataset with the filled-in missing values for this part.
 
-1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
+1) Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
-2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). The plot should look something like the following, which was created using simulated data:
+
+```r
+data2$day <- weekdays(as.Date(data2$date))
+data2$weekday <- ifelse(data2$day=="sabado"|data2$day=="domingo",c("weekend"), c("weekday")) 
+```
+
+2) Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
+
+
+
+```r
+library(lattice)
+AverageStepsPerIntervalDay<-aggregate(steps~interval+weekday,data=data2,mean,na.rm=TRUE)
+xyplot(steps~interval|weekday,data=AverageStepsPerIntervalDay,type="l",layout=c(1,2))
+```
+
+![](./PA1_template_files/figure-html/unnamed-chunk-13-1.png) 
+
+
