@@ -1,23 +1,20 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
 
 1. Load the data
 
-```{r}
+
+```r
 data<-read.csv("activity.csv")
 ```
 
 2. Process/transform the data (if necessary) into a format suitable for your analysis
 
 
-```{r}
+
+```r
 TotalStepsPerDay<-aggregate(steps~date,data=data,sum,na.rm=TRUE)
 AverageStepsPerInterval<-aggregate(steps~interval,data=data,mean,na.rm=TRUE)
 ```
@@ -28,34 +25,52 @@ For this part of the assignment, you can ignore the missing values in the datase
 
 1. Make a histogram of the total number of steps taken each day
 
-```{r}
+
+```r
 hist(TotalStepsPerDay$steps, main="Histogram", xlab="Total steps per day")
 ```
 
+![](./PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+
 2. Calculate and report the mean and median total number of steps taken per day
 
-```{r}
-mean(TotalStepsPerDay$steps)
-median(TotalStepsPerDay$steps)
 
+```r
+mean(TotalStepsPerDay$steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
+median(TotalStepsPerDay$steps)
+```
+
+```
+## [1] 10765
 ```
 
 ## What is the average daily activity pattern?
 
 1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
-```{r}
+
+```r
 plot(AverageStepsPerInterval$interval,AverageStepsPerInterval$steps,type="l",xlab="Day Interval",ylab="Average number of steps",main="Average number of steps by Day Interval")
 ```
+
+![](./PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 
-```{r }
+
+```r
 interval.max<-AverageStepsPerInterval[which.max(AverageStepsPerInterval$steps),]$interval
 ```
 
-The 5-minute interval, on average across all the days in the dataset, which contains the maximum number of steps is `r interval.max`.
+The 5-minute interval, on average across all the days in the dataset, which contains the maximum number of steps is 835.
 
 ## Imputing missing values
 
